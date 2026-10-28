@@ -5,7 +5,7 @@ Personal developer portfolio for **Wassim Friejeh** (Beirut, Lebanon).
 The live site is **frontend-only** (Next.js) and deploys on **Vercel alone**. Projects and profile are static JSON; contact form saves then emails from a Next.js route.
 
 ```
-Wassim Portfolio/
+Wassim-Portfolio/
   frontend/   Next.js site (deploy this to Vercel)
   backend/    Legacy Express CMS (optional / local only — not required for production)
 ```
@@ -13,7 +13,7 @@ Wassim Portfolio/
 ## Quick start (frontend only)
 
 ```bash
-cd "Wassim Portfolio/frontend"
+cd "Wassim-Portfolio/frontend"
 cp .env.example .env.local   # if present; or set vars below
 npm install
 npm run dev                  # http://127.0.0.1:4410
@@ -28,7 +28,7 @@ Edit content in:
 
 ## Deploy on Vercel
 
-1. Create a Vercel project with **Root Directory** = `Wassim Portfolio/frontend` (or `frontend` if that is the repo root layout).
+1. Create a Vercel project with **Root Directory** = `Wassim-Portfolio/frontend` (or `frontend` if that is the repo root layout).
 2. Add environment variables:
 
 | Variable | Purpose |

@@ -7,7 +7,7 @@ Persistent instructions for agents working in this repository.
 Personal developer portfolio for **Wassim Friejeh** (full-stack developer, Aramoun, Lebanon) plus a small CMS.
 
 ```
-Wassim Portfolio/
+Wassim-Portfolio/
   frontend/   Next.js (TypeScript, Tailwind) — public site + /admin
   backend/    Express (TypeScript) + PostgreSQL (Prisma) — API, auth, CMS
 ```
