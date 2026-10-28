@@ -1,0 +1,57 @@
+/* Sunset-aurora palette: deep ink ground, violet → pink → amber energy.
+   Retune the whole site from this file. */
+
+:root {
+  --bg: #07060d;
+  --bg-elevated: #0e0c18;
+  --surface: rgba(22, 18, 38, 0.55);
+  --surface-solid: #141122;
+  --ink: #f7f5ff;
+  --muted: #a8a3c0;
+  --line: rgba(196, 181, 253, 0.14);
+  --line-strong: rgba(196, 181, 253, 0.28);
+
+  --violet: #8b5cf6;
+  --pink: #ec4899;
+  --amber: #fbbf24;
+  --cyan: #22d3ee;
+  --lime: #a3e635;
+
+  --accent: var(--violet);
+  --accent-2: var(--pink);
+  --accent-ink: #12051f;
+  --danger: #fb7185;
+  --success: #4ade80;
+
+  --grad-brand: linear-gradient(115deg, #8b5cf6 0%, #c084fc 42%, #ec4899 100%);
+  --grad-brand-soft: linear-gradient(
+    115deg,
+    rgba(139, 92, 246, 0.22) 0%,
+    rgba(192, 132, 252, 0.18) 42%,
+    rgba(236, 72, 153, 0.18) 100%
+  );
+
+  --font-sans: var(--font-albert), system-ui, sans-serif;
+  --font-display: var(--font-albert), system-ui, sans-serif;
+
+  --step-small: 0.875rem;
+  --step-body: 1.0625rem;
+  --step-lead: clamp(1.125rem, 1rem + 0.45vw, 1.3rem);
+  --step-head: clamp(2rem, 1.3rem + 2.6vw, 3.25rem);
+  --step-display: clamp(2.75rem, 1.4rem + 5.4vw, 5.5rem);
+
+  --page-pad: clamp(1.25rem, 4vw, 2.5rem);
+  --content-max: 74rem;
+  --radius: 1.25rem;
+  --radius-pill: 999px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --duration-press: 140ms;
+  --duration-hover: 220ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-press: 0ms;
+    --duration-hover: 0ms;
+  }
+}

@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DevelopmentStatus {
+  INDEPENDENT
+  CONTRIBUTION
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Profile {
+  id           Int      @id @default(1)
+  name         String   @default("Wassim Friejeh")
+  title        String   @default("Full-stack developer")
+  location     String   @default("Beirut, Lebanon")
+  introHeadline String  @default("Hey, I'm Wassim.\nI build what you see—and what makes it work.")
+  introSupport String   @default("Full-stack developer building web applications, backend systems, and APIs.")
+  about        String   @default("Based in Beirut, Lebanon, with three years of professional experience across websites, web applications, backend systems, APIs, e-commerce, payment integrations, and deployment.")
+  capabilities String   @default("Websites · Web applications · Backend systems · APIs · E-commerce · Payments · Deployment")
+  email        String?
+  phone        String?
+  linkedinUrl  String?
+  githubUrl    String?
+  otherLinks   Json     @default("[]")
+  updatedAt    DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String   @default("")
+  message   String
+  emailSent Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Project {
+  id                    String            @id @default(cuid())
+  slug                  String            @unique
+  name                  String
+  shortDescription      String            @default("")
+  longDescription       String            @default("")
+  category              String            @default("")
+  developmentStatus     DevelopmentStatus @default(INDEPENDENT)
+  contributionNote      String            @default("")
+  confirmedContribution String            @default("")
+  techTags              String[]          @default([])
+  websiteUrl            String?
+  androidUrl            String?
+  iosUrl                String?
+  partnerUrl            String?
+  partnerUrlPublic      Boolean           @default(false)
+  featured              Boolean           @default(false)
+  displayOrder          Int               @default(100)
+  status                PublishStatus     @default(DRAFT)
+  coverImageId          String?           @unique
+  coverImage            MediaAsset?       @relation("ProjectCover", fields: [coverImageId], references: [id], onDelete: SetNull)
+  gallery               MediaAsset[]      @relation("ProjectGallery")
+  detailsIncomplete     Boolean           @default(false)
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@index([status, featured, displayOrder])
+  @@index([category])
+}
+
+model MediaAsset {
+  id               String    @id @default(cuid())
+  filename         String
+  originalName     String
+  mimeType         String
+  size             Int
+  width            Int?
+  height           Int?
+  storageKey       String
+  url              String
+  alt              String    @default("")
+  sortOrder        Int       @default(0)
+  projectCoverOf   Project?  @relation("ProjectCover")
+  projectId        String?
+  project          Project?  @relation("ProjectGallery", fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt        DateTime  @default(now())
+
+  @@index([projectId, sortOrder])
+}
