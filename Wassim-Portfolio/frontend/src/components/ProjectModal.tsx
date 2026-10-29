@@ -78,11 +78,13 @@ export function ProjectModal({ project, open, onClose }: Props) {
           <button
             ref={closeRef}
             type="button"
-            className="btn btn-ghost absolute right-3 top-3 !min-h-9 !px-3 !bg-[rgba(7,6,13,0.75)] backdrop-blur"
+            className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-[rgba(7,6,13,0.75)] text-white backdrop-blur transition-colors hover:bg-[rgba(25,21,40,0.92)]"
             onClick={onClose}
             aria-label="Close project details"
           >
-            Close
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
           </button>
         </div>
 

@@ -23,8 +23,8 @@ export function WorkSection({
   const list = typeof limit === "number" ? projects.slice(0, limit) : projects;
 
   return (
-    <section id="work" className="page-pad scroll-mt-28 py-16 lg:py-20">
-      <div className="content-width">
+    <section className="page-pad py-16 lg:py-20">
+      <div id="work" className="content-width scroll-mt-28">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <div className="max-w-2xl">
             <p className="eyebrow">Portfolio</p>

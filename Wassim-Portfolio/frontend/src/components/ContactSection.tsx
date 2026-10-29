@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import type { Profile } from "@/lib/types";
 import { CV_PATH, SOCIAL } from "@/lib/site";
 import { ExternalLink } from "@/components/ExternalLink";
@@ -8,6 +8,19 @@ import { ExternalLink } from "@/components/ExternalLink";
 type Props = {
   profile: Profile | null;
 };
+
+type ContactField = "name" | "email" | "subject" | "message";
+
+const emptyTouchedFields: Record<ContactField, boolean> = {
+  name: false,
+  email: false,
+  subject: false,
+  message: false,
+};
+
+function validEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
 
 function digitsOnly(value: string) {
   return value.replace(/\D/g, "");
@@ -61,14 +74,49 @@ export function ContactSection({ profile }: Props) {
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
+  const [touched, setTouched] = useState(emptyTouchedFields);
 
-  const canSubmit = useMemo(
-    () => name.trim().length > 0 && formEmail.trim().length > 0 && message.trim().length >= 10,
-    [name, formEmail, message],
-  );
+  useEffect(() => {
+    if (status !== "success") return;
+    const timeout = window.setTimeout(() => setStatus("idle"), 5000);
+    return () => window.clearTimeout(timeout);
+  }, [status]);
+
+  const fieldErrors = useMemo(() => {
+    const trimmedName = name.trim();
+    const trimmedEmail = formEmail.trim();
+    const trimmedSubject = subject.trim();
+    const trimmedMessage = message.trim();
+
+    return {
+      name: !trimmedName ? "Enter your name." : trimmedName.length > 120 ? "Name must be 120 characters or fewer." : null,
+      email: !trimmedEmail
+        ? "Enter your email address."
+        : trimmedEmail.length > 255
+          ? "Email must be 255 characters or fewer."
+          : !validEmail(trimmedEmail)
+            ? "Enter a valid email address."
+            : null,
+      subject: trimmedSubject.length > 200 ? "Subject must be 200 characters or fewer." : null,
+      message: !trimmedMessage
+        ? "Enter a message."
+        : trimmedMessage.length < 10
+          ? "Message must be at least 10 characters."
+          : trimmedMessage.length > 5000
+            ? "Message must be 5,000 characters or fewer."
+            : null,
+    };
+  }, [name, formEmail, subject, message]);
+
+  const canSubmit = Object.values(fieldErrors).every((fieldError) => fieldError === null);
+
+  function markTouched(field: ContactField) {
+    setTouched((current) => ({ ...current, [field]: true }));
+  }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
+    setTouched({ name: true, email: true, subject: true, message: true });
     if (!canSubmit || status === "sending") return;
     setStatus("sending");
     setError(null);
@@ -94,6 +142,7 @@ export function ContactSection({ profile }: Props) {
       setFormEmail("");
       setSubject("");
       setMessage("");
+      setTouched(emptyTouchedFields);
       if (body.emailSent === false) {
         // Saved successfully; mail may retry later from the inbox table/sheet.
         console.warn("Contact saved, but notification email was not sent.");
@@ -105,13 +154,13 @@ export function ContactSection({ profile }: Props) {
   }
 
   return (
-    <section id="contact" className="page-pad relative scroll-mt-28 overflow-hidden pb-24 pt-12 lg:pb-28 lg:pt-16">
+    <section className="page-pad relative overflow-hidden pb-24 pt-12 lg:pb-28 lg:pt-16">
       <div className="contact-aurora" aria-hidden>
         <span />
         <span />
       </div>
 
-      <div className="content-width relative z-10">
+      <div id="contact" className="content-width relative z-10 scroll-mt-28">
         <div className="mx-auto max-w-3xl text-center">
           <p className="status-pill mx-auto m-0">
             <span className="status-dot" aria-hidden />
@@ -208,24 +257,7 @@ export function ContactSection({ profile }: Props) {
 
           {/* Form */}
           <div className="glass p-6 sm:p-8 lg:col-span-8">
-            {status === "success" ? (
-              <div className="grid min-h-[22rem] place-items-center text-center" role="status">
-                <div>
-                  <p className="m-0 text-head font-bold tracking-tight">Message sent</p>
-                  <p className="mt-3 m-0 text-[var(--muted)]">
-                    Thanks — I&apos;ll get back to you within 24 hours.
-                  </p>
-                  <button
-                    type="button"
-                    className="btn btn-ghost mt-8"
-                    onClick={() => setStatus("idle")}
-                  >
-                    Send another
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={onSubmit} className="grid gap-5" noValidate>
+            <form onSubmit={onSubmit} className="grid gap-5" noValidate>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label className="contact-label" htmlFor="contact-name">
@@ -239,7 +271,11 @@ export function ContactSection({ profile }: Props) {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      onBlur={() => markTouched("name")}
+                      aria-invalid={touched.name && Boolean(fieldErrors.name)}
+                      aria-describedby={touched.name && fieldErrors.name ? "contact-name-error" : undefined}
                     />
+                    {touched.name && fieldErrors.name ? <p id="contact-name-error" className="contact-field-error">{fieldErrors.name}</p> : null}
                   </div>
                   <div>
                     <label className="contact-label" htmlFor="contact-email">
@@ -254,7 +290,11 @@ export function ContactSection({ profile }: Props) {
                       required
                       value={formEmail}
                       onChange={(e) => setFormEmail(e.target.value)}
+                      onBlur={() => markTouched("email")}
+                      aria-invalid={touched.email && Boolean(fieldErrors.email)}
+                      aria-describedby={touched.email && fieldErrors.email ? "contact-email-error" : undefined}
                     />
+                    {touched.email && fieldErrors.email ? <p id="contact-email-error" className="contact-field-error">{fieldErrors.email}</p> : null}
                   </div>
                 </div>
 
@@ -268,7 +308,11 @@ export function ContactSection({ profile }: Props) {
                     name="subject"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
+                    onBlur={() => markTouched("subject")}
+                    aria-invalid={touched.subject && Boolean(fieldErrors.subject)}
+                    aria-describedby={touched.subject && fieldErrors.subject ? "contact-subject-error" : undefined}
                   />
+                  {touched.subject && fieldErrors.subject ? <p id="contact-subject-error" className="contact-field-error">{fieldErrors.subject}</p> : null}
                 </div>
 
                 <div>
@@ -284,7 +328,11 @@ export function ContactSection({ profile }: Props) {
                     placeholder="Tell me about your project, timeline, and goals..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    onBlur={() => markTouched("message")}
+                    aria-invalid={touched.message && Boolean(fieldErrors.message)}
+                    aria-describedby={touched.message && fieldErrors.message ? "contact-message-error" : undefined}
                   />
+                  {touched.message && fieldErrors.message ? <p id="contact-message-error" className="contact-field-error">{fieldErrors.message}</p> : null}
                 </div>
 
                 {error ? (
@@ -296,15 +344,25 @@ export function ContactSection({ profile }: Props) {
                 <button
                   type="submit"
                   className="btn btn-primary !min-h-12 w-full !rounded-[0.9rem]"
-                  disabled={!canSubmit || status === "sending"}
+                  disabled={status === "sending"}
                 >
                   {status === "sending" ? "Sending…" : "Send message"}
                 </button>
               </form>
-            )}
           </div>
         </div>
       </div>
+      {status === "success" ? (
+        <div className="contact-toast" role="status" aria-live="polite">
+          <div>
+            <p className="m-0 font-semibold">Message sent</p>
+            <p className="mt-0.5 m-0 text-sm text-[var(--muted)]">Thanks — I&apos;ll get back to you within 24 hours.</p>
+          </div>
+          <button type="button" className="contact-toast-close" onClick={() => setStatus("idle")} aria-label="Dismiss notification">
+            ×
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { publicMediaUrl } from "@/lib/media";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ServicesSection } from "@/components/ServicesSection";
+import { SkillsSection } from "@/components/SkillsSection";
 import { WorkSection } from "@/components/WorkSection";
 import { ContactSection } from "@/components/ContactSection";
 import { CV_PATH } from "@/lib/site";
@@ -154,8 +155,8 @@ export default async function HomePage() {
         ) : null}
 
         {/* About */}
-        <section id="about" className="page-pad scroll-mt-28 py-20 lg:py-28">
-          <div className="content-width grid gap-12 lg:grid-cols-12">
+        <section className="page-pad py-20 lg:py-28">
+          <div id="about" className="content-width grid scroll-mt-28 gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <p className="eyebrow">About me</p>
               <h2 className="section-title mt-4">
@@ -179,6 +180,8 @@ export default async function HomePage() {
         </section>
 
         <ServicesSection />
+
+        <SkillsSection />
 
         <WorkSection projects={featuredFirst} limit={6} showViewAll />
 

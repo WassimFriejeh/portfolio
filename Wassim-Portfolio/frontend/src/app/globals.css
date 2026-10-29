@@ -446,6 +446,135 @@ img {
   box-shadow: 0 8px 24px -10px var(--hue);
 }
 
+/* ---------- Skills ---------- */
+
+.skills-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.skills-section::before {
+  content: "";
+  position: absolute;
+  inset: 15% 15% 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.13), transparent 67%);
+}
+
+.skills-card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.65rem;
+  transition:
+    transform var(--duration-hover) var(--ease-out),
+    border-color var(--duration-hover) ease;
+}
+
+.skills-card:hover {
+  transform: translateY(-4px);
+}
+
+.skills-card::after {
+  content: "";
+  position: absolute;
+  right: -5rem;
+  bottom: -6rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 999px;
+  opacity: 0.2;
+  filter: blur(12px);
+  transition: opacity var(--duration-hover) ease;
+}
+
+.skills-card:hover::after {
+  opacity: 0.34;
+}
+
+.skills-card-violet::after { background: #8b5cf6; }
+.skills-card-cyan::after { background: #22d3ee; }
+.skills-card-pink::after { background: #ec4899; }
+
+.skills-card-violet:hover { border-color: rgba(196, 181, 253, 0.5); }
+.skills-card-cyan:hover { border-color: rgba(103, 232, 249, 0.45); }
+.skills-card-pink:hover { border-color: rgba(249, 168, 212, 0.45); }
+
+.skills-card-index {
+  margin: 0;
+  color: rgba(196, 181, 253, 0.68);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.skills-card-orb {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  background: var(--pink);
+  box-shadow: 0 0 0 5px rgba(236, 72, 153, 0.12), 0 0 18px rgba(236, 72, 153, 0.7);
+}
+
+.skills-card-cyan .skills-card-orb {
+  background: #22d3ee;
+  box-shadow: 0 0 0 5px rgba(34, 211, 238, 0.12), 0 0 18px rgba(34, 211, 238, 0.7);
+}
+
+.skills-list {
+  display: grid;
+  gap: 0.85rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.skills-list li {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.75rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 550;
+}
+
+.skills-list-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.skills-list-label span:last-child {
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.skills-progress {
+  display: block;
+  height: 0.45rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.skills-progress > span {
+  display: block;
+  width: var(--skill-level);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--grad-brand);
+}
+
+.skills-card-cyan .skills-progress > span {
+  background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+}
+
+.skills-card-pink .skills-progress > span {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+}
+
 /* ---------- Project cards ---------- */
 
 .project-card {
@@ -685,6 +814,51 @@ a.contact-row:hover {
   outline: none;
   border-color: rgba(196, 181, 253, 0.55);
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+}
+
+.contact-field-error {
+  margin: 0.45rem 0 0;
+  color: var(--danger);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.contact-toast {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 70;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  max-width: min(26rem, calc(100vw - 2.5rem));
+  padding: 1rem 1.1rem 1rem 1.25rem;
+  border: 1px solid rgba(103, 232, 249, 0.35);
+  border-radius: 1rem;
+  background: rgba(18, 17, 29, 0.96);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.9);
+  animation: pop-in 240ms var(--ease-out) both;
+}
+
+.contact-toast-close {
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.contact-toast-close:hover,
+.contact-toast-close:focus-visible {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* ---------- Reveal on load ---------- */

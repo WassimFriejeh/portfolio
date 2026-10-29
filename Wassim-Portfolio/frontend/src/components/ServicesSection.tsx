@@ -107,8 +107,8 @@ const services: { title: string; body: string; hue: string; icon: ReactNode }[] 
 
 export function ServicesSection() {
   return (
-    <section id="services" className="page-pad scroll-mt-28 py-16 lg:py-20">
-      <div className="content-width">
+    <section className="page-pad py-16 lg:py-20">
+      <div id="services" className="content-width scroll-mt-28">
         <div className="mx-auto max-w-2xl text-center">
           <p className="eyebrow justify-center">Services</p>
           <h2 className="section-title mt-4">
