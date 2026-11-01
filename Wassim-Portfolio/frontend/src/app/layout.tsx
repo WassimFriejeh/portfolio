@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Albert_Sans } from "next/font/google";
+import { PerformanceMode } from "@/components/PerformanceMode";
 import "./globals.css";
 
 const albert = Albert_Sans({
@@ -34,7 +35,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={albert.variable}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <PerformanceMode />
+        {children}
+      </body>
     </html>
   );
 }

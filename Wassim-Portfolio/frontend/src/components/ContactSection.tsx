@@ -162,11 +162,7 @@ export function ContactSection({ profile }: Props) {
 
       <div id="contact" className="content-width relative z-10 scroll-mt-28">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="status-pill mx-auto m-0">
-            <span className="status-dot" aria-hidden />
-            Get in touch
-          </p>
-          <h2 className="section-title mt-5">
+          <h2 className="section-title m-0">
             Start your next <span className="gradient-text">project</span>
           </h2>
           <p className="section-sub">

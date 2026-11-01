@@ -27,6 +27,38 @@ html {
   }
 }
 
+/* Older and battery-conscious devices keep the visual language without continuously
+   repainting large filtered layers while the page is open. */
+html[data-performance="low"] body::before {
+  mask-image: none;
+  opacity: 0.22;
+}
+
+html[data-performance="low"] .aurora {
+  filter: blur(32px) saturate(115%);
+}
+
+html[data-performance="low"] .aurora span {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html[data-performance="low"] .gradient-text,
+html[data-performance="low"] .marquee-track {
+  animation: none;
+}
+
+html[data-performance="low"] .glass,
+html[data-performance="low"] .glass-strong,
+html[data-performance="low"] .modal-overlay {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+html[data-performance="low"] .contact-aurora span {
+  filter: blur(28px);
+}
+
 body {
   margin: 0;
   min-height: 100dvh;
