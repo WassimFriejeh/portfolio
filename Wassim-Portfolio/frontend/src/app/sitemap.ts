@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getPublishedProjects } from "@/lib/api";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:4410";
+const siteUrl = "https://wassimfriejeh.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
