@@ -37,7 +37,7 @@ export default async function HomePage() {
       <SiteHeader />
       <main>
         {/* Hero */}
-        <section className="relative isolate -mt-[4.75rem] overflow-hidden page-pad pb-20 pt-[8.5rem] lg:pb-28 lg:pt-[10rem]">
+        <section className="relative isolate -mt-[4.75rem] overflow-hidden page-pad pb-20 pt-[7.75rem] lg:pb-28 lg:pt-[9rem]">
           <div className="aurora" aria-hidden>
             <span />
             <span />
@@ -73,7 +73,7 @@ export default async function HomePage() {
                 </a>
               </div>
 
-              <dl className="rise rise-4 mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-[var(--line)] pt-6">
+              <dl className="rise rise-4 mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-[var(--line)] pt-6 lg:grid-cols-[0.8fr_0.85fr_1.35fr]">
                 <div>
                   <dt className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">Experience</dt>
                   <dd className="m-0 mt-1 text-3xl font-bold tracking-tight">3+ yrs</dd>
@@ -90,7 +90,7 @@ export default async function HomePage() {
                   <dd className="m-0 mt-1.5">
                     <a
                       href={`mailto:${email}`}
-                      className="break-all text-sm font-medium text-[var(--muted)] no-underline transition-colors hover:text-white"
+                      className="break-all text-sm font-medium text-[var(--muted)] no-underline transition-colors hover:text-white lg:break-normal lg:whitespace-nowrap"
                     >
                       {email}
                     </a>
@@ -150,7 +150,7 @@ export default async function HomePage() {
         ) : null}
 
         {/* About */}
-        <section className="page-pad py-20 lg:py-28">
+        <section className="page-pad py-12 sm:py-20 lg:py-28">
           <div id="about" className="content-width grid scroll-mt-28 gap-12 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <p className="eyebrow">About me</p>

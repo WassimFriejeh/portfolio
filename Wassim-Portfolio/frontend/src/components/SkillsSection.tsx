@@ -40,7 +40,7 @@ const skillGroups = [
 
 export function SkillsSection() {
   return (
-    <section className="skills-section page-pad py-20 lg:py-28">
+    <section className="skills-section page-pad py-12 sm:py-20 lg:py-28">
       <div id="skills" className="content-width scroll-mt-28">
         <div className="mx-auto max-w-2xl text-center">
           <p className="eyebrow justify-center">Skills &amp; technologies</p>

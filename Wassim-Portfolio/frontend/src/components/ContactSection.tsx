@@ -154,7 +154,7 @@ export function ContactSection({ profile }: Props) {
   }
 
   return (
-    <section className="page-pad relative overflow-hidden pb-24 pt-12 lg:pb-28 lg:pt-16">
+    <section className="page-pad relative overflow-hidden pb-20 pt-10 sm:pb-24 sm:pt-12 lg:pb-28 lg:pt-16">
       <div className="contact-aurora" aria-hidden>
         <span />
         <span />
