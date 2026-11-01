@@ -44,14 +44,9 @@ export default async function HomePage() {
             <span />
           </div>
 
-          <div className="content-width relative z-10 grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
+          <div className="content-width relative z-10 grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
-              <p className="status-pill rise m-0">
-                <span className="status-dot" aria-hidden />
-                Open to new projects
-              </p>
-
-              <h1 className="rise rise-1 mt-7 m-0 text-display font-bold leading-[0.98] tracking-[-0.045em]">
+              <h1 className="rise rise-1 m-0 text-display font-bold leading-[0.98] tracking-[-0.045em]">
                 Hi, I&apos;m Wassim.
                 <br />
                 <span className="gradient-text">I build for the web.</span>
@@ -104,7 +99,7 @@ export default async function HomePage() {
               </dl>
             </div>
 
-            <div className="relative hidden h-[32rem] lg:col-span-5 lg:block" aria-hidden>
+            <div className="relative h-[30rem] sm:h-[34rem] lg:col-span-5 lg:h-[32rem]" aria-hidden>
               {heroCovers.length > 0 ? (
                 heroCovers.map((cover, i) => (
                   <figure
